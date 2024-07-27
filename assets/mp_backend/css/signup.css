@@ -1,0 +1,37 @@
+.message {
+    font-size: 12px;
+    text-align: justify;
+    padding: 0px 10px;
+    margin: 0px;
+}
+
+.error {
+    font-size: 12px;
+    color: red;
+    font-style: italic;
+    padding: 0px 5px;
+}
+
+.mechtoollogo {
+    /* background-color: rgba(0,0,0,1);
+    padding: 20px; */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.border_error {
+    border: 1px solid red;
+}
+
+.otpMessage {
+    font-size: 14px;
+    text-align: justify;
+}
+
+#otpform {
+    color: #ffffff;
+}
+
+.colorWhite{
+    color : #ffffff ! important;
+}

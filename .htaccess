@@ -1,0 +1,14 @@
+## Run InvoicePlane in a subfolder
+## If you are using a subfolder please remove the hash in front of the line ‘#RewriteBase /subfolder’
+## and replace ‘subfolder’ with the actual name of your folder, i.e. ‘RewriteBase /invoices’
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteRule ^(.*)$ index.php?/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^mechpoint\.care [NC]
+RewriteRule ^(.*)$ http://www.mechpoint.care/$1 [L,R=301]
+</IfModule>

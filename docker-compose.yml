@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: onfleek.mechtool
+    hostname: youngstorage
+    restart: unless-stopped
+    networks:
+      default:
+    environment:
+      - TZ=Asia/Kolkata
+    cap_add:
+      - NET_ADMIN
+    labels:
+      - "traefik.domain=mechtoolz.com"
+      - "traefik.enable=true"
+      - "traefik.http.routers.mechtool.rule=Host(`appin.mechtoolz.com`)"
+      - "traefik.http.routers.mechtool.service=svc_mechtool"
+      - "traefik.http.routers.mechtool.tls=true"
+      - traefik.http.routers.mechtool.entrypoints=websecure
+      - "traefik.http.routers.mechtool.tls.certresolver=custom_resolver"
+      - "traefik.http.services.svc_mechtool.loadbalancer.server.port=80"
+    volumes:
+      - docker_onfleek:/home/mechtool/
+
+  mysql.youngstorage.in:
+    image: mysql:5.7
+    networks:
+      default:
+    container_name: onfleek.mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: onfleek
+      MYSQL_DATABASE: anish_mechtool_appin
+      MYSQL_USER: onfleek
+      MYSQL_PASSWORD: onfleek
+    volumes:
+      - db_data:/var/lib/mysql
+
+  adminer.youngstorage.in:
+    image: adminer:latest
+    networks:
+      default:
+    container_name: onfleek.adminer.youngstorage.in
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql.youngstorage.in
+      ADMINER_DESIGN: 'dracula'
+    restart: always
+    depends_on:
+      - mysql.youngstorage.in
+
+# networks:
+#   default:
+#     name: services
+#     external: true
+
+
+volumes:
+  db_data:
+  php:
+  docker_onfleek:
